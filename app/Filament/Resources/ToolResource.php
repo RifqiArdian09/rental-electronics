@@ -44,6 +44,11 @@ class ToolResource extends Resource
                 ->required()
                 ->label('Kategori'),
 
+            TextInput::make('description')
+                ->required()
+                ->label('Deskripsi')
+                ->maxLength(255),
+
             TextInput::make('stock')
                 ->numeric()
                 ->required()
@@ -72,6 +77,10 @@ class ToolResource extends Resource
 
             TextColumn::make('category.name')
                 ->label('Kategori'),
+            
+                TextColumn::make('description')
+                ->label('Deskripsi')
+                ->limit(50),
 
             TextColumn::make('stock')
                 ->label('Stok'),

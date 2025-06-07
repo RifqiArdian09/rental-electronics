@@ -18,15 +18,23 @@
         <div class="p-6">
           <h3 class="font-bold text-xl mb-2">{{ $tool->name }}</h3>
           <p class="text-gray-600 text-sm mb-4">{{ $tool->category ? $tool->category->name : 'Kategori tidak tersedia' }}</p>
+          <p class="text-gray-600 text-sm mb-4">{{ $tool->description }}</p>
           <div class="flex justify-between items-center">
             <div>
               <span class="text-primary font-bold text-lg">Rp {{ number_format($tool->price_per_day, 0, ',', '.') }}</span>
               <span class="text-gray-500 text-sm block">/ hari</span>
             </div>
-            <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition flex items-center">
-              <i class="fas fa-shopping-cart mr-2"></i>
-              Sewa
-            </button>
+            @auth('customer')
+              <a href="{{ route('rental.create', $tool->id) }}" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition flex items-center">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Sewa
+              </a>
+            @else
+              <button onclick="showLoginModal()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition flex items-center">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                Sewa
+              </button>
+            @endauth
           </div>
         </div>
       </div>

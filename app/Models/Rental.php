@@ -15,6 +15,7 @@ class Rental extends Model
         'user_name',
         'start_date',
         'end_date',
+        'catatan',
         'payment_status',
         'total_price',
     ];

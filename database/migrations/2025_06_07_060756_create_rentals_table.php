@@ -14,7 +14,7 @@ class CreateRentalsTable extends Migration
             $table->date('start_date');             
             $table->date('end_date');               
             $table->unsignedBigInteger('total_price'); 
-            $table->enum('payment_status', ['paid', 'unpaid'])->default('unpaid');
+            $table->enum('payment_status', ['pending', 'paid', 'unpaid'])->default('pending');
             $table->timestamps();
         });
     }

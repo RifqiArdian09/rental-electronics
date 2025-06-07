@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tool extends Model
 {
-    protected $fillable = ['name', 'image', 'category_id', 'stock', 'price_per_day'];
+    protected $fillable = ['name', 'image', 'category_id', 'description','stock', 'price_per_day'];
 
 
     public function category()
