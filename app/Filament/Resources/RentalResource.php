@@ -12,6 +12,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\Action;
 
 class RentalResource extends Resource
 {
@@ -41,6 +42,11 @@ class RentalResource extends Resource
                 ->label('Tanggal Selesai')
                 ->required(),
 
+            TextInput::make('quantity')
+                ->label('Jumlah')
+                ->numeric()
+                ->required(),
+
             Select::make('payment_status')
                 ->options([
                     'paid' => 'Lunas',
@@ -49,6 +55,14 @@ class RentalResource extends Resource
                 ->default('unpaid')
                 ->label('Status Pembayaran')
                 ->required(),
+
+            Select::make('is_returned')
+                ->label('Status Pengembalian')
+                ->options([
+                    false => 'Belum Dikembalikan',
+                    true => 'Sudah Dikembalikan',
+                ])
+                ->default(false),
         ]);
     }
 
@@ -69,6 +83,9 @@ class RentalResource extends Resource
                 ->date()
                 ->label('Selesai'),
 
+            TextColumn::make('quantity')
+                ->label('Jumlah'),
+
             TextColumn::make('total_price')
                 ->money('IDR')
                 ->label('Total'),
@@ -84,6 +101,42 @@ class RentalResource extends Resource
                     'success' => 'paid',
                     'danger' => 'unpaid',
                 ]),
+
+            BadgeColumn::make('is_returned')
+                ->label('Pengembalian')
+                ->formatStateUsing(fn (bool $state): string => $state ? 'Sudah Dikembalikan' : 'Belum Dikembalikan')
+                ->colors([
+                    'success' => true,
+                    'warning' => false,
+                ]),
+        ])
+        ->actions([
+            Action::make('markPaid')
+                ->label('Sudah Lunas')
+                ->icon('heroicon-o-check-circle')
+                ->color('success')
+                ->requiresConfirmation()
+                ->visible(fn (Rental $record): bool => $record->payment_status !== 'paid')
+                ->action(function (Rental $record) {
+                    $record->payment_status = 'paid';
+                    $record->save();
+                }),
+
+            Action::make('markReturned')
+                ->label('Sudah Dikembalikan')
+                ->icon('heroicon-o-arrow-uturn-left')
+                ->color('primary')
+                ->requiresConfirmation()
+                ->visible(fn (Rental $record): bool => !$record->is_returned)
+                ->action(function (Rental $record) {
+                    $record->is_returned = true;
+                    $record->save();
+
+                    // Tambah stok alat
+                    $tool = $record->tool;
+                    $tool->stock += $record->quantity;
+                    $tool->save();
+                }),
         ]);
     }
 
