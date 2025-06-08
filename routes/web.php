@@ -8,6 +8,7 @@ use App\Http\Controllers\RentalController;
 use App\Http\Controllers\RentalHistoryController;
 use App\Http\Controllers\TestimonialController;
 
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Auth Routes for customer
@@ -37,3 +38,10 @@ Route::middleware('auth:customer')->group(function () {
     Route::get('/testimoni/buat/{rental_id}', [TestimonialController::class, 'create'])->name('testimonials.create');
     Route::post('/testimoni/simpan', [TestimonialController::class, 'store'])->name('testimonials.store');
 });
+
+
+
+
+Route::get('/tools', [ToolsController::class, 'index'])->name('tools.index');
+Route::get('/tools/search', [ToolsController::class, 'search'])->name('tools.search');
+Route::get('/tools/{id}/quickview', [ToolsController::class, 'quickview'])->name('tools.quickview');

@@ -36,4 +36,23 @@ class Tool extends Model
     {
         return $query->where('stock', '>', 0);
     }
+
+    public function testimonials()
+    {
+        return $this->hasManyThrough(
+            Testimonial::class,
+            Rental::class,
+            'tool_id', // FK di rentals table
+            'rental_id', // FK di testimonials table
+            'id', // PK di tools table
+            'id' // PK di rentals table
+        );
+    }
+
+    // Accessor untuk rating rata-rata
+    public function getAverageRatingAttribute()
+    {
+        return $this->testimonials()->avg('rating') ?? 0;
+    }
 }
+
