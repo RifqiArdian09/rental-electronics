@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tool;
 use App\Models\Testimonial;
+use App\Models\User;
+use App\Models\Rental;
+use App\Models\Customer;
 
 class HomeController extends Controller
 {
@@ -20,7 +23,20 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        // Kirim data ke view 'home'
-        return view('home', compact('tools', 'testimonials'));
+        // Statistik
+        $totalTools = Tool::count();
+        $totalCustomers = Customer::count();
+        $totalRentals = Rental::count();
+        $satisfaction = Testimonial::where('is_approved', true)->avg('rating');
+        $satisfaction = round($satisfaction * 20); // Misal rating dari 1–5 diubah ke persen
+        
+        return view('home', compact(
+            'tools',
+            'testimonials',
+            'totalTools',
+            'totalCustomers',
+            'totalRentals',
+            'satisfaction'
+        ));
     }
 }
