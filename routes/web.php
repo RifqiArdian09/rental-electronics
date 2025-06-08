@@ -7,6 +7,9 @@ use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\RentalHistoryController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\Customer\ProfileController;
+use App\Http\Controllers\ContactController;
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -39,6 +42,18 @@ Route::middleware('auth:customer')->group(function () {
     Route::post('/testimoni/simpan', [TestimonialController::class, 'store'])->name('testimonials.store');
 });
 
+
+
+
+Route::middleware(['auth:customer'])->prefix('customer')->group(function () {
+    Route::get('/profile/view', [ProfileController::class, 'index'])->name('customer.profile.index');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('customer.profile.edit');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('customer.profile.update');
+});
+
+
+
+Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
 
 
 
