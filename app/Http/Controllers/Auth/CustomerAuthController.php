@@ -36,25 +36,34 @@ class CustomerAuthController extends Controller
     }
 
     public function register(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:customers',
-            'profession' => 'nullable|string|max:255',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:customers',
+        'profession' => 'nullable|string|max:255',
+        'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
 
-        $customer = Customer::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'profession' => $validated['profession'] ?? null,
-            'password' => bcrypt($validated['password']),
-        ]);
+    $photoPath = null;
 
-        Auth::guard('customer')->login($customer);
-
-        return redirect(route('home'))->with('success', 'Pendaftaran berhasil! Selamat datang ' . $customer->name);
+    if ($request->hasFile('photo')) {
+        $photoPath = $request->file('photo')->store('photos', 'public');
     }
+
+    $customer = Customer::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'profession' => $validated['profession'] ?? null,
+        'photo_url' => $photoPath,
+        'password' => bcrypt($validated['password']),
+    ]);
+
+    Auth::guard('customer')->login($customer);
+
+    return redirect(route('home'))->with('success', 'Pendaftaran berhasil! Selamat datang ' . $customer->name);
+}
+
 
     public function logout(Request $request)
     {

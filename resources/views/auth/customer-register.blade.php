@@ -29,6 +29,28 @@
             cursor: pointer;
             color: #6b7280;
         }
+        .photo-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            display: none;
+            margin: 0 auto 10px;
+        }
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .upload-btn input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="auth-bg flex items-center justify-center min-h-screen p-4">
@@ -57,8 +79,21 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('auth.customer-register') }}" class="space-y-5">
+        <form method="POST" action="{{ route('auth.customer-register') }}" class="space-y-5" enctype="multipart/form-data">
             @csrf
+
+            <!-- Photo Upload Field -->
+            <div class="space-y-2 text-center">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Foto Profil</label>
+                <img id="photoPreview" class="photo-preview" src="#" alt="Preview Foto Profil">
+                <div class="upload-btn">
+                    <button type="button" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md font-medium hover:bg-gray-200 transition-colors">
+                        <i class="fas fa-camera mr-2"></i> Pilih Foto
+                    </button>
+                    <input type="file" id="photo" name="photo" accept="image/*" onchange="previewPhoto(event)">
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG (Maks. 2MB)</p>
+            </div>
 
             <div class="space-y-2">
                 <label class="block text-sm font-medium text-gray-700" for="name">Nama Lengkap</label>
@@ -139,7 +174,6 @@
             </button>
         </form>
 
-
         <p class="mt-8 text-center text-sm text-gray-600">
             Sudah punya akun? 
             <a href="{{ route('auth.customer-login') }}" class="font-medium text-green-600 hover:text-green-500">Masuk di sini</a>
@@ -159,6 +193,22 @@
                 field.type = 'password';
                 icon.classList.remove('fa-eye-slash');
                 icon.classList.add('fa-eye');
+            }
+        }
+
+        function previewPhoto(event) {
+            const input = event.target;
+            const preview = document.getElementById('photoPreview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
             }
         }
     </script>

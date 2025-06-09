@@ -21,7 +21,7 @@ class ToolsController extends Controller
             $query->where('category_id', $request->category);
         }
 
-        $tools = $query->latest()->paginate(9);
+        $tools = $query->latest()->paginate(12);
         $categories = Category::all();
 
         return view('tools.index', compact('tools', 'categories'));
@@ -41,7 +41,7 @@ class ToolsController extends Controller
                   ->orWhere('description', 'like', "%$query%");
             })
             ->latest()
-            ->paginate(9);
+            ->paginate(12);
 
         $categories = Category::all();
 

@@ -54,6 +54,9 @@ Route::middleware(['auth:customer'])->prefix('customer')->group(function () {
 
 
 Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
+// web.php
+Route::get('/tools', [ToolsController::class, 'index'])->name('tools.index');
+Route::get('/tools/{tool}', [ToolsController::class, 'show'])->name('tools.show');
 
 
 

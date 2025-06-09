@@ -92,14 +92,7 @@
                 </div>
             </div>
 
-            <div class="mt-6 grid grid-cols-2 gap-3">
-                <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    <i class="fab fa-google text-red-500 mr-2"></i> Google
-                </a>
-                <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    <i class="fab fa-facebook-f text-blue-600 mr-2"></i> Facebook
-                </a>
-            </div>
+            
         </div>
 
         <p class="mt-8 text-center text-sm text-gray-600">

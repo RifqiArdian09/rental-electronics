@@ -52,9 +52,7 @@
           </div>
         </div>
       @else
-        <button onclick="openLoginModal()" class="font-medium text-gray-700 hover:text-primary px-3 py-1.5 border border-gray-300 rounded-lg hover:border-primary">
-          Login
-        </button>
+      <a href="{{ route('auth.customer-login') }}" class="block py-2 text-center text-primary hover:underline">Login Customer</a>
       @endauth
     </div>
 
@@ -86,7 +84,7 @@
         </div>
       @else
         <div class="pt-2 border-t border-gray-100 space-y-2">
-          <button onclick="openLoginModal()" class="w-full py-2 px-3 bg-primary text-white rounded-lg font-medium">Login Customer</button>
+        <a href="{{ route('auth.customer-login') }}" class="block py-2 text-center text-primary hover:underline">Login Customer</a>
           <a href="{{ route('auth.customer-register') }}" class="block py-2 text-center text-primary hover:underline">Belum punya akun? Daftar</a>
         </div>
       @endauth
