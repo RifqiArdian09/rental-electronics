@@ -24,9 +24,8 @@
 
 ## 🛠️ Teknologi yang Digunakan
 
-- **Laravel** — Framework backend PHP
-- **Blade** — Template engine Laravel
-- **Tailwind CSS** — Styling modern dan responsif
-- **MySQL** — Basis data relasional
-- **Filament** — Untuk dashboard admin yang intuitif (jika digunakan)
-
+- **Laravel**
+- **Blade**
+- **Tailwind CSS** 
+- **MySQL** 
+- **Filament** 
