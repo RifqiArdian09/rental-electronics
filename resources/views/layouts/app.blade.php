@@ -12,18 +12,19 @@
   <script>
     tailwind.config = {
       theme: {
-        extend: {
-          colors: {
-            primary: '#4F46E5',
-            secondary: '#10B981',
-            dark: '#1F2937',
-            light: '#F9FAFB',
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-        }
-      }
+  extend: {
+    colors: {
+      primary: '#1E3A8A',     // Biru gelap (utama - profesional)
+      secondary: '#FACC15',   // Kuning cerah (aksen - menarik perhatian)
+      dark: '#1F2937',        // Abu gelap (teks utama)
+      light: '#F9FAFB',       // Putih kebiruan (latar)
+      muted: '#E5E7EB',       // Abu terang (garis pemisah, border)
+    },
+    fontFamily: {
+      sans: ['Inter', 'sans-serif'],
+    },
+  },
+}
     }
   </script>
 
@@ -105,7 +106,7 @@
   @include('partials.footer')
 
   {{-- Floating WhatsApp Button --}}
-  <a href="https://wa.me/6285182911840" target="_blank" rel="noopener noreferrer"
+  <a href="#" target="_blank" rel="noopener noreferrer"
      class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition z-50"
      aria-label="Chat via WhatsApp">
     <i class="fab fa-whatsapp text-2xl"></i>

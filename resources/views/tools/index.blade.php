@@ -187,10 +187,41 @@
         @endforeach
       </div>
 
-      <!-- Pagination -->
-      <div class="mt-12 flex justify-center">
-        {{ $tools->links() }}
-      </div>
+      <!-- Pagination Custom -->
+      @if ($tools->hasPages())
+      <nav role="navigation" aria-label="Pagination Navigation" class="flex justify-center mt-12 space-x-2">
+          {{-- Previous Page Link --}}
+          @if ($tools->onFirstPage())
+              <span class="px-4 py-2 rounded-md bg-gray-200 text-gray-500 cursor-not-allowed select-none">
+                  &laquo; Sebelumnya
+              </span>
+          @else
+              <a href="{{ $tools->previousPageUrl() }}" rel="prev" class="px-4 py-2 rounded-md bg-primary text-white hover:bg-primary-dark transition">
+                  &laquo; Sebelumnya
+              </a>
+          @endif
+
+          {{-- Pagination Elements --}}
+          @foreach ($tools->getUrlRange(1, $tools->lastPage()) as $page => $url)
+              @if ($page == $tools->currentPage())
+                  <span aria-current="page" class="px-4 py-2 rounded-md bg-primary text-white font-semibold cursor-default">{{ $page }}</span>
+              @else
+                  <a href="{{ $url }}" class="px-4 py-2 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 transition">{{ $page }}</a>
+              @endif
+          @endforeach
+
+          {{-- Next Page Link --}}
+          @if ($tools->hasMorePages())
+              <a href="{{ $tools->nextPageUrl() }}" rel="next" class="px-4 py-2 rounded-md bg-primary text-white hover:bg-primary-dark transition">
+                  Selanjutnya &raquo;
+              </a>
+          @else
+              <span class="px-4 py-2 rounded-md bg-gray-200 text-gray-500 cursor-not-allowed select-none">
+                  Selanjutnya &raquo;
+              </span>
+          @endif
+      </nav>
+      @endif
     @endif
   </div>
 </section>

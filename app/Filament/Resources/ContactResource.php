@@ -75,6 +75,11 @@ class ContactResource extends Resource
                     ->icon('heroicon-o-envelope')
                     ->color('primary')
                     ->form([
+                        Forms\Components\Textarea::make('original_message')
+                            ->label('Pesan Asli')
+                            ->default(fn ($record) => $record->message)
+                            ->disabled()
+                            ->rows(5),
                         Textarea::make('reply')
                             ->label('Tulis Balasan Email')
                             ->required()
@@ -92,33 +97,41 @@ class ContactResource extends Resource
                             ->send();
                     }),
 
+
                 // Reply via WhatsApp button
                 Tables\Actions\Action::make('replyWhatsapp')
-                    ->label('Balas via WhatsApp')
-                    ->icon('heroicon-o-chat-bubble-left')
-                    ->color('success')
-                    ->form([
-                        Textarea::make('reply')
-                            ->label('Tulis Balasan WhatsApp')
-                            ->required()
-                            ->rows(5),
-                    ])
-                    ->action(function ($record, array $data) {
-                        $record->reply = $data['reply'];
-                        $record->save();
+                ->label('Balas via WhatsApp')
+                ->icon('heroicon-o-chat-bubble-left')
+                ->color('success')
+                ->form([
+                    Forms\Components\Textarea::make('original_message')
+                        ->label('Pesan Asli')
+                        ->default(fn ($record) => $record->message)
+                        ->disabled()
+                        ->rows(5),
+                    Textarea::make('reply')
+                        ->label('Tulis Balasan WhatsApp')
+                        ->required()
+                        ->rows(5),
+                ])
+                ->action(function ($record, array $data) {
+                    $record->reply = $data['reply'];
+                    $record->save();
 
-                        Notification::make()
-                            ->title('Balasan berhasil disimpan')
-                            ->success()
-                            ->send();
+                    Notification::make()
+                        ->title('Balasan berhasil disimpan')
+                        ->success()
+                        ->send();
 
-                        $phone = preg_replace('/^0/', '62', $record->phone); // contoh ubah 08 jadi 62
-                        $message = "Halo {$record->name},%0A%0ATerkait pesan Anda: \"{$record->message}\"%0A%0ABalasan kami:%0A{$record->reply}";
+                    $phone = preg_replace('/^0/', '62', $record->phone);
+                    $original = urlencode($record->message);
+                    $reply = urlencode($data['reply']);
+                    $message = "Halo {$record->name},%0A%0ATerkait pesan Anda:%0A\"{$original}\"%0A%0ABalasan kami:%0A{$reply}";
 
-                        $url = "https://wa.me/{$phone}?text={$message}";
+                    $url = "https://wa.me/{$phone}?text={$message}";
 
-                        return redirect($url);
-                    }),
+                    return redirect($url);
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

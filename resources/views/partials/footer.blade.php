@@ -58,7 +58,7 @@
         <div class="mt-6">
           <h5 class="font-medium mb-2">Kontak Kami</h5>
           <p class="text-gray-400 text-sm">
-            <i class="fas fa-map-marker-alt mr-2"></i> Jl. Elektronik No. 123, Jakarta
+            <i class="fas fa-map-marker-alt mr-2"></i> Jl. Elektronik No. 123, Bengkulu, Indonesia
           </p>
           <p class="text-gray-400 text-sm mt-1">
             <i class="fas fa-phone-alt mr-2"></i> (021) 1234-5678

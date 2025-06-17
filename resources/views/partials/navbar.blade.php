@@ -11,10 +11,10 @@
 
     <!-- Desktop Navigation -->
     <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
-      <a href="#tools" class="font-medium text-gray-700 hover:text-primary">Produk</a>
-      <a href="#features" class="font-medium text-gray-700 hover:text-primary">Fitur</a>
-      <a href="#about" class="font-medium text-gray-700 hover:text-primary">Tentang</a>
-      <a href="#testimonials" class="font-medium text-gray-700 hover:text-primary">Testimoni</a>
+      <a href="{{ url('/#tools') }}" class="font-medium text-gray-700 hover:text-primary">Produk</a>
+      <a href="{{ url('/#features') }}" class="font-medium text-gray-700 hover:text-primary">Fitur</a>
+      <a href="{{ url('/#about') }}" class="font-medium text-gray-700 hover:text-primary">Tentang</a>
+      <a href="{{ url('/#testimonials') }}" class="font-medium text-gray-700 hover:text-primary">Testimoni</a>
 
       @auth('customer')
         <div class="relative ml-2">
